@@ -6,7 +6,11 @@ const quizTheme         = document.querySelectorAll(".quizTheme"),
       answerList        = document.querySelectorAll(".answerList"),
       answerListHolder  = document.getElementById('answerListHolder'),
       gameMachine       = document.getElementById("gameMachine"),
-      gameScoreDisplay  = document.getElementById("gameScoreDisplay");
+      gameScoreDisplay  = document.getElementById("gameScoreDisplay"),
+      playAgain         = document.getElementById("playAgain");
+      playAgain.addEventListener("click", function() {
+        window.location.href = window.location.href;
+      });
 
 let category      = "",
     difficulty    = "",
@@ -14,12 +18,12 @@ let category      = "",
     diffBonus     = 1,
     questionArray = [];
 
-
 for (let i = 0; i < quizTheme.length; i++) {
     quizTheme[i].addEventListener("click", getQuizTheme);
 }
 
 function getQuizTheme() {
+   // playAgain.style.display = "none";
     category = this.id;
         quizThemeList.style.display = 'none';
         quizDiffList.style.display = "block";
@@ -40,7 +44,7 @@ function getQuizDiff () {
 }
 
 function getQuestions () {
-    $.get (`https://opentdb.com/api.php?amount=3&category=${category}&difficulty=${difficulty}&type=multiple`, (quests) => {
+    $.get (`https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple`, (quests) => {
 
     questionArray = quests;
         prepareQuestion();
@@ -49,6 +53,10 @@ function getQuestions () {
 
 function prepareQuestion () {
 
+if (questionArray.results.length === 0) {       // by getting 10 questions at once, I cut down on the get requests sent
+    getQuestions();
+    return;
+}
     let findQuestion = [];
     findQuestion = questionArray.results.pop();
     let theQuestion = findQuestion.question;
@@ -79,8 +87,24 @@ function showQuestion (theQuestion, possibleAnswers, correctAnswer) {
         }
 }
 
-
 function checkUserAnswer () {
-    console.log(this.innerHTML);
-    console.log(correctAnswer)
+    for (let i = 0; i < answerList.length; i++) {
+        answerList[i].removeEventListener('click', checkUserAnswer);
+        }
+    this.innerHTML === correctAnswer ?
+        scoreUp ():
+        gameOver ();
+}
+
+function scoreUp () {
+    userScore = userScore+diffBonus;
+    console.log(userScore);
+    gameScoreDisplay.textContent = "Your score is :"+ userScore;
+    prepareQuestion();
+}
+
+function gameOver () {
+    playAgain.style.display = "block";
+    playAgain.textContent = "Play Again?";
+    gameScoreDisplay.textContent = "That's incorrect. The correct answer was : "+correctAnswer+" You scored "+userScore+" points";
 }

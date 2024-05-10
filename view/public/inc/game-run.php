@@ -8,3 +8,4 @@
 
 
 <p class="h4" id="gameScoreDisplay"></p>
+<button class="btn d-flex align-self-center" style="display: none;" id="playAgain"></button>
