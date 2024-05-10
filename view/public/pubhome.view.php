@@ -28,7 +28,7 @@
 <?php include ("inc/footer.public.php"); ?>
 <?php include ("../view/cdn/jsBS.php") ?>
 <script src="js/script.js"></script>
-<script src="js/quiz-script.js"></script>
+<script src="js/quiz-script-rework.js"></script>
 </body>
 </html>
 
