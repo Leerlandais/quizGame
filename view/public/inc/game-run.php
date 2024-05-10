@@ -5,3 +5,6 @@
     <li class="answerList list-group-item bg-transparent"></li>
     <li class="answerList list-group-item bg-transparent"></li>
 </ul>
+
+
+<p class="h4" id="gameScoreDisplay"></p>

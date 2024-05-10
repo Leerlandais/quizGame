@@ -1,5 +1,5 @@
 
-
+<div class="container">
 <fieldset id="quizThemeField">
     <legend id="quizLegend" class="animate__animated mb-2">First pick your theme</legend>
       <ul class="list-group animate__animated animate__delay-1s" id="quizThemeList">
@@ -27,7 +27,7 @@
       <li class="list-group-item quizDiff bg-transparent" id="medium">Medium</li>
       <li class="list-group-item quizDiff bg-transparent" id="hard">Hard</li>
     </ul>    
-
+    </div>
 
 <div id="questionForm">
     <!-- JS CREATED, NO DOUBT -->
