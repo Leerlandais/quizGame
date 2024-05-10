@@ -53,7 +53,7 @@ function setQuizDiff () {
 
 function getQuestions () {
     quizDiffList.style.display = "none";
-    $.get (`https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple`, (quests) => {
+    $.get (`https://opentdb.com/api.php?amount=4&category=${category}&difficulty=${difficulty}&type=multiple`, (quests) => {
 
     questionArray = quests;
         prepareQuestion();
