@@ -31,23 +31,53 @@ function setQuizDiff () {
  //   console.log(this.id);
     difficulty = this.id;
  //   console.log("cat : ", category, " | diff : ", difficulty);
+    quizDiffList.classList.remove("animate__delay-1s");
     quizDiffList.classList.replace("animate__fadeIn", "animate__fadeOut");
     quizLegend.classList.replace("animate__fadeIn", "animate__fadeOut");
     setTimeout(() => {
         gameMachine.style.display = "block";
         quizLegend.textContent = "Let's Play";
         quizLegend.classList.replace('animate__fadeOut', "animate__fadeIn");
-    }, 1500);
+    }, 2000);
     runQuiz();
 }
 
 function runQuiz () {
     console.log(category, difficulty);
+    gameMachine.style.display = "block";
 
-$.get (`https://opentdb.com/api.php?amount=1&category=${category}&difficulty=${difficulty}`, (question) => {
-    console.log(question.results[0].question);
+$.get (`https://opentdb.com/api.php?amount=1&category=${category}&difficulty=${difficulty}&type=multiple`, (question) => {
+    console.log(question.results[0]);
+    gameMachine.innerHTML = question.results[0].question;
+    let possibleAnswers = question.results[0].incorrect_answers;
+    possibleAnswers.push(question.results[0].correct_answer);
+     correctAnswer = question.results[0].correct_answer;
+    console.log(possibleAnswers);
+
+            for (let i = possibleAnswers.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [possibleAnswers[i], possibleAnswers[j]] = [possibleAnswers[j], possibleAnswers[i]];
+        }
+        console.log(possibleAnswers);
+      
+      
+
+
+    const answerList = document.querySelectorAll(".answerList");
+    const answerListHolder = document.getElementById('answerListHolder');
+    answerListHolder.style.display = "block";
+    for (let i = 0; i < answerList.length; i++) {
+        answerList[i].innerHTML = possibleAnswers[i];
+        answerList[i].addEventListener('click', function(){
+
+            let userAnswer = this.textContent;
+            userAnswer === correctAnswer ? console.log("bravo") : console.log("wrong");
+        });
+    }
 })
 }
+
+
 
 
 

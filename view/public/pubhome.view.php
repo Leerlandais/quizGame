@@ -24,9 +24,7 @@
             include ("inc/game-run.php");
         ?>
         
-<form action="" method="POST">
-    <button class="btn" name="leave">Leave</button>
-</form>
+
 <?php include ("inc/footer.public.php"); ?>
 <?php include ("../view/cdn/jsBS.php") ?>
 <script src="js/script.js"></script>
