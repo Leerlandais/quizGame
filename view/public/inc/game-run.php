@@ -1,0 +1,1 @@
+<p class="h2 animate__animated animate__delay-1s animate__zoomIn" style="display: none;" id="gameMachine">GAME ON</p>
