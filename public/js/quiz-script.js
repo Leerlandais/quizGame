@@ -5,14 +5,15 @@ const quizDiffList  = document.getElementById("quizDiffList");
 const quizLegend    = document.getElementById("quizLegend");
 const gameMachine   = document.getElementById("gameMachine");
 // console.log(quizTheme.length);
-let category = "";
+let category    = "";
+let difficulty  = "";
 for (let i = 0; i < quizTheme.length; i++) {
     quizTheme[i].addEventListener("click", setQuizTheme);
 }
 
 function setQuizTheme() {
-//   category = this.id;
-    console.log(category);
+   category = this.id;
+ //   console.log(category);
    quizThemeList.classList.add("animate__fadeOut");
    quizLegend.classList.add('animate__fadeOut')
    setTimeout(() => {
@@ -28,8 +29,8 @@ function setQuizTheme() {
 
 function setQuizDiff () {
  //   console.log(this.id);
-    let difficulty = this.id;
-    console.log("cat : ", category, " | diff : ", difficulty);
+    difficulty = this.id;
+ //   console.log("cat : ", category, " | diff : ", difficulty);
     quizDiffList.classList.replace("animate__fadeIn", "animate__fadeOut");
     quizLegend.classList.replace("animate__fadeIn", "animate__fadeOut");
     setTimeout(() => {
@@ -37,7 +38,18 @@ function setQuizDiff () {
         quizLegend.textContent = "Let's Play";
         quizLegend.classList.replace('animate__fadeOut', "animate__fadeIn");
     }, 1500);
+    runQuiz();
 }
+
+function runQuiz () {
+    console.log(category, difficulty);
+
+$.get (`https://opentdb.com/api.php?amount=1&category=${category}&difficulty=${difficulty}`, (question) => {
+    console.log(question.results[0].question);
+})
+}
+
+
 
 
 
