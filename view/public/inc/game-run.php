@@ -11,6 +11,7 @@
 
 
 <p class="h4" id="gameScoreDisplay"></p>
+<p class="h5">You have <span id="showPlayerLives"></span> lives left</p>
 <button class="btn d-flex align-self-center" style="display: none;" id="playAgain"></button>
 
 </div>

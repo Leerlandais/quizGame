@@ -8,7 +8,8 @@ const quizTheme          = document.querySelectorAll(".quizTheme"),
       answerListHolder   = document.getElementById('answerListHolder'),
       gameMachine        = document.getElementById("gameMachine"),
       gameScoreDisplay   = document.getElementById("gameScoreDisplay"),
-      gameQuestionWindow = document.getElementById('gameQuestionWindow');
+      gameQuestionWindow = document.getElementById('gameQuestionWindow'),
+      showPlayerLives    = document.getElementById("showPlayerLives");
       playAgain          = document.getElementById("playAgain");
       playAgain.addEventListener("click", function() {
         window.location.href = window.location.href;
@@ -18,6 +19,7 @@ let category      = "",
     difficulty    = "",
     userScore     = 0,
     diffBonus     = 1,
+    playerLives   = 3,
     questionArray = [];
 
 for (let i = 0; i < quizTheme.length; i++) {
@@ -62,6 +64,8 @@ function getQuestions () {
 
 function prepareQuestion () {
     gameQuestionWindow.style.display = "block";
+    gameScoreDisplay.textContent = "Your score is :"+ userScore;
+    showPlayerLives.textContent = playerLives;
 if (questionArray.results.length === 0) {       // by getting 10 questions at once, I cut down on the get requests sent
     getQuestions();
     return;
@@ -106,7 +110,7 @@ function checkUserAnswer () {
         }
     this.innerHTML === correctAnswer ?
         scoreUp ():
-        gameOver ();
+        gameOver();
 }
 
 function scoreUp () {
@@ -117,7 +121,16 @@ function scoreUp () {
 }
 
 function gameOver () {
+    playerLives--;
+    showPlayerLives.textContent = playerLives;
+    if (playerLives === 0) {
     playAgain.style.display = "block";
     playAgain.textContent = "Play Again?";
     gameScoreDisplay.textContent = "That's incorrect. The correct answer was : "+correctAnswer+" You scored "+userScore+" points";
+    }else {
+        gameScoreDisplay.textContent = "That's incorrect. The correct answer was : "+correctAnswer;
+        setTimeout(() => {
+            prepareQuestion();
+        }, 2500);
+    }
 }
