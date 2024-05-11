@@ -2,7 +2,7 @@
 <div class="container">
 <fieldset id="quizThemeField">
     <legend id="quizLegend" class="animate__animated mb-2">First pick your theme</legend>
-      <ul class="list-group animate__animated animate__delay-1s d-flex flex-row flex-wrap justify-content-ven" id="quizThemeList">
+      <ul class="list-group animate__animated animate__delay-1s d-flex flex-row flex-wrap justify-content-center" id="quizThemeList">
         <li class="list-group-item quizTheme bg-transparent w-25" id="9">General Knowledge</li>
         <li class="list-group-item quizTheme bg-transparent w-25" id="10">Books</li>
         <li class="list-group-item quizTheme bg-transparent w-25" id="11">Film</li>
