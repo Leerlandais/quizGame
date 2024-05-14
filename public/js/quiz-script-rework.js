@@ -20,12 +20,19 @@ let category      = "",
     userScore     = 0,
     diffBonus     = 1,
     playerLives   = 3,
-    questionArray = [];
+    questionArray = [],
+    questionAlreadyAsked = [];
 
 for (let i = 0; i < quizTheme.length; i++) {
     quizTheme[i].addEventListener("click", setQuizTheme);
 }
-
+function getNewQuizTheme() {
+    for (let i = 0; i < quizTheme.length; i++) {
+        quizTheme[i].addEventListener("click", setQuizTheme);
+    }
+    gameQuestionWindow.style.display = "none";
+        quizThemeField.style.display = 'block';
+}
 function setQuizTheme() {
     for (let i = 0; i < quizTheme.length; i++) {
         quizTheme[i].removeEventListener("click", setQuizTheme);
@@ -49,15 +56,17 @@ function setQuizDiff () {
     difficulty === "hard" ? diffBonus = 2 : difficulty === "medium" ? diffBonus = 1.5 : diffBonus = 1;
     gameMachine.style.display = "block";
     quizLegend.textContent = "Let's Play";
-
+    
     getQuestions();
 }
 
 function getQuestions () {
+    
     quizDiffList.style.display = "none";
-    $.get (`https://opentdb.com/api.php?amount=4&category=${category}&difficulty=${difficulty}&type=multiple`, (quests) => {
+    $.get (`https://opentdb.com/api.php?amount=7&category=${category}&difficulty=${difficulty}&type=multiple`, (quests) => {
 
     questionArray = quests;
+    console.log(quests);
         prepareQuestion();
 });
 }
@@ -66,16 +75,16 @@ function prepareQuestion () {
     gameQuestionWindow.style.display = "block";
     gameScoreDisplay.textContent = "Your score is :"+ userScore;
     showPlayerLives.textContent = playerLives;
-if (questionArray.results.length === 0) {       // by getting 10 questions at once, I cut down on the get requests sent
+if (questionArray.results.length === 0) {       // by getting 10 questions at once, I cut down on the get requests sent ----- I reduced the amount to 7 due to categories with fewer questions available
     getQuestions();
     return;
-}
+} 
     let findQuestion = [];
     findQuestion = questionArray.results.pop();
     let theQuestion = findQuestion.question;
     let theCategory = findQuestion.category;
     let possibleAnswers = findQuestion.incorrect_answers;
-
+    let questionAsked = findQuestion.question;
         possibleAnswers.push(findQuestion.correct_answer);
         correctAnswer = decodeHtmlEntities(findQuestion.correct_answer); // need to convert the HtmlSpecialChars
        
@@ -83,7 +92,13 @@ if (questionArray.results.length === 0) {       // by getting 10 questions at on
           const j = Math.floor(Math.random() * (i + 1));
           [possibleAnswers[i], possibleAnswers[j]] = [possibleAnswers[j], possibleAnswers[i]];
         }
+        if (checkForAskedQuestion (questionAsked) === true) {
   showQuestion(theQuestion, possibleAnswers, theCategory);
+}else {
+    alert("You have answered all questions available at that level of difficulty in your category. Please choose another");
+    getNewQuizTheme();
+//    return;
+}
 }
 
 function decodeHtmlEntities(html) {                 // Special Character converter
@@ -93,6 +108,7 @@ function decodeHtmlEntities(html) {                 // Special Character convert
 }
 
 function showQuestion (theQuestion, possibleAnswers, theCategory) {
+    console.log("use this :", correctAnswer);
     const gameCategory = document.getElementById('gameCategory');
     gameCategory.style.display = "block";
     gameCategory.innerHTML = theCategory;
@@ -115,7 +131,7 @@ function checkUserAnswer () {
 
 function scoreUp () {
     userScore = userScore+diffBonus;
-    console.log(userScore);
+//    console.log(userScore);
     gameScoreDisplay.textContent = "Your score is :"+ userScore;
     prepareQuestion();
 }
@@ -133,4 +149,21 @@ function gameOver () {
             prepareQuestion();
         }, 2500);
     }
+}
+
+function checkForAskedQuestion (questionAsked) {
+//    console.log(questionAlreadyAsked, ' already');
+//    console.log(questionAsked, ' asked')
+    	if (questionAlreadyAsked.includes(questionAsked)) {
+            questionAlreadyAsked.push(questionAsked);
+                console.log("seen");
+                console.log(questionAlreadyAsked);
+                console.log(questionAsked);
+            return false;
+        }else {
+            questionAlreadyAsked.push(questionAsked);
+                console.log("unseen");
+            return true;
+        }
+        
 }
