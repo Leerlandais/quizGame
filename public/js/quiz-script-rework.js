@@ -11,6 +11,7 @@ const quizTheme          = document.querySelectorAll(".quizTheme"),
       gameQuestionWindow = document.getElementById('gameQuestionWindow'),
       showPlayerLives    = document.getElementById("showPlayerLives");
       playAgain          = document.getElementById("playAgain");
+      
       playAgain.addEventListener("click", function() {
         window.location.href = window.location.href;
       });
@@ -66,7 +67,7 @@ function getQuestions () {
     $.get (`https://opentdb.com/api.php?amount=7&category=${category}&difficulty=${difficulty}&type=multiple`, (quests) => {
 
     questionArray = quests;
-    console.log(quests);
+  //  console.log(quests);
         prepareQuestion();
 });
 }
@@ -108,7 +109,7 @@ function decodeHtmlEntities(html) {                 // Special Character convert
 }
 
 function showQuestion (theQuestion, possibleAnswers, theCategory) {
-    console.log("use this :", correctAnswer);
+ //   console.log("use this :", correctAnswer);
     const gameCategory = document.getElementById('gameCategory');
     gameCategory.style.display = "block";
     gameCategory.innerHTML = theCategory;
@@ -156,13 +157,13 @@ function checkForAskedQuestion (questionAsked) {
 //    console.log(questionAsked, ' asked')
     	if (questionAlreadyAsked.includes(questionAsked)) {
             questionAlreadyAsked.push(questionAsked);
-                console.log("seen");
-                console.log(questionAlreadyAsked);
-                console.log(questionAsked);
+    //            console.log("seen");
+     //           console.log(questionAlreadyAsked);
+     //           console.log(questionAsked);
             return false;
         }else {
             questionAlreadyAsked.push(questionAsked);
-                console.log("unseen");
+     //           console.log("unseen");
             return true;
         }
         
