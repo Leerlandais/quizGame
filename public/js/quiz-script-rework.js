@@ -126,7 +126,7 @@ function decodeHtmlEntities(html) {
 }
 
 function showQuestion (theQuestion, possibleAnswers, theCategory) {
-    console.log("use this :", correctAnswer);
+ //   console.log("use this :", correctAnswer);
     const gameCategory = document.getElementById('gameCategory');
     gameCategory.style.display = "block";
     gameCategory.innerHTML = theCategory;
@@ -178,16 +178,3 @@ function checkForAskedQuestion (questionAsked) {
     }
 }
     
-    
-    
-    /*
-
-
-
-
-- 
-- 
-- 
-- .
-    
-    */
